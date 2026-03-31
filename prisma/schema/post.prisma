@@ -1,0 +1,18 @@
+model Post {
+  id           String        @id @default(uuid(7))
+  text         String?
+  image        String?
+  reactions    BigInt        @default(0)
+  privacy      Privacy       @default(PUBLIC)
+  // Relations to User
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  postLikes    PostLike[]
+  postDislikes PostDislike[]
+  comments     Comment[]
+
+  @@index([userId])
+  @@map("posts")
+}

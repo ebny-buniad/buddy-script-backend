@@ -1,0 +1,14 @@
+model PostDislike {
+  id        String   @id @default(uuid(7))
+  // Relations to Post and User
+  postId    String
+  userId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([postId, userId])
+  @@index([postId, userId])
+  @@map("post_dislikes")
+}
