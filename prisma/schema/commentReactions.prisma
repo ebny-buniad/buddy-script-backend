@@ -1,0 +1,13 @@
+model CommentReactions {
+  id        String       @id @default(uuid(7))
+  type      ReactionType
+  commentId String
+  userId    String
+  comment   Comment      @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  @@index([commentId, userId])
+  @@map("comment_reactions")
+}

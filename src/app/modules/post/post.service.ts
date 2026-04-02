@@ -27,32 +27,27 @@ const getAllPosts = async () => {
                     image: true,
                 }
             },
-            postLikes: {
-                select: {
-                    userId: true,
-                }
-            },
-            postDislikes: {
-                select: {
-                    userId: true,
-                }
-            },
             comments: {
                 include: {
-                    commentLikes: true,
-                    commentDislikes: true,
-                    user: {
+                    commentReactions: {
+                        include: {
+                            user: {
+                                select: {
+                                    name: true,
+                                    image: true,
+                                }
+                            }
+                        }
+                    },
+                    _count: {
                         select: {
-                            name: true,
-                            image: true,
+                            commentReactions: true,
                         }
                     }
                 }
             },
             _count: {
                 select: {
-                    postLikes: true,
-                    postDislikes: true,
                     comments: true,
                 }
             }
