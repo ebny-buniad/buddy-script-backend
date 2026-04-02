@@ -37,7 +37,18 @@ const getAllPosts = async () => {
                     userId: true,
                 }
             },
-            comments: true,
+            comments: {
+                include: {
+                    commentLikes: true,
+                    commentDislikes: true,
+                    user: {
+                        select: {
+                            name: true,
+                            image: true,
+                        }
+                    }
+                }
+            },
             _count: {
                 select: {
                     postLikes: true,
