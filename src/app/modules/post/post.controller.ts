@@ -24,10 +24,37 @@ const getAllPosts = catchAsync(async (req: Request, res: Response) => {
         message: "Posts retrieved successfully",
         data: result,
     })
+});
+
+// ** update a post
+const updatePost = catchAsync(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const payload = req.body;
+    const userId = req.user?.id as string;
+    const result = await PostService.updatePost(id as string, payload, userId);
+    sendResponse(res, {
+        statusCode: StatusCodes.OK,
+        message: "Post updated successfully",
+        data: result,
+    })
+})
+
+// ** delete a post
+const deletePost = catchAsync(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const userId = req.user?.id as string;
+    const result = await PostService.deletePost(id as string, userId);
+    sendResponse(res, {
+        statusCode: StatusCodes.OK,
+        message: "Post deleted successfully",
+        data: result,
+    })
 })
 
 
 export const PostController = {
     createPost,
-    getAllPosts
+    getAllPosts,
+    updatePost,
+    deletePost
 }

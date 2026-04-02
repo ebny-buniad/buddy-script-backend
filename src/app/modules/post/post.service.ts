@@ -53,8 +53,33 @@ const getAllPosts = async () => {
     return posts;
 }
 
+// ** update a post
+const updatePost = async (id: string, payload: Partial<ICreatePost>, userId: string) => {
+    const post = await prisma.post.update({
+        where: {
+            id,
+            userId
+        },
+        data: payload
+    })
+    return post;
+}
+
+// ** delete a post
+const deletePost = async (id: string, userId: string) => {
+    const post = await prisma.post.delete({
+        where: {
+            id,
+            userId
+        }
+    })
+    return post;
+}
+
 
 export const PostService = {
     createPost,
-    getAllPosts
+    getAllPosts,
+    updatePost,
+    deletePost
 }
