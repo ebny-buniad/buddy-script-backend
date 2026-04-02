@@ -2,7 +2,6 @@ model Post {
   id           String        @id @default(uuid(7))
   text         String?
   image        String?
-  reactions    BigInt        @default(0)
   privacy      Privacy       @default(PUBLIC)
   // Relations to User
   userId       String

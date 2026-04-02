@@ -21,7 +21,7 @@ declare global {
 const authMiddleware = (...roles: Role[]) => {
     return async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const token = req.headers.cookie
+            const token = req.headers.cookie;
             // console.log('Cookie from frontnd ---', token)
 
             if (!token) {
