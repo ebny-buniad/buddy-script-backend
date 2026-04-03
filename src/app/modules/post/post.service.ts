@@ -27,6 +27,17 @@ const getAllPosts = async () => {
                     image: true,
                 }
             },
+            postReactions: {
+                include: {
+                    user: {
+                        select: {
+                            name: true,
+                            image: true,
+                        }
+                    }
+                },
+            
+            },
             comments: {
                 include: {
                     commentReactions: {
@@ -49,6 +60,7 @@ const getAllPosts = async () => {
             _count: {
                 select: {
                     comments: true,
+                    postReactions: true,
                 }
             }
         },
