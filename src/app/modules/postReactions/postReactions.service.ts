@@ -17,7 +17,21 @@ const createPostReaction = async (payload: ICreatePostReaction, userId: string, 
     return postReaction;
 }
 
+// remove a post reaction
+const removePostReaction = async (userId: string, postId: string) => {
+    const postReaction = await prisma.postReactions.delete({
+        where: {
+            userId_postId: {
+                userId,
+                postId
+            }
+        }
+    })
+    return postReaction;
+}
+
 
 export const PostReactionsService = {
-    createPostReaction
+    createPostReaction,
+    removePostReaction
 }
