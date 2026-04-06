@@ -7,6 +7,7 @@ const router = Router();
 router.post("/", authMiddleware(Role.USER, Role.ADMIN), PostController.createPost);
 router.get("/", PostController.getAllPosts);
 router.put("/:id", authMiddleware(Role.USER, Role.ADMIN), PostController.updatePost);
+router.put("/:id/privacy", authMiddleware(Role.USER, Role.ADMIN), PostController.updatePostPrivacy);
 router.delete("/:id", authMiddleware(Role.USER, Role.ADMIN), PostController.deletePost);
 
 export const PostRoutes: Router = router;

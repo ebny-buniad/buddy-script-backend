@@ -92,6 +92,21 @@ const updatePost = async (id: string, payload: Partial<ICreatePost>, userId: str
     return post;
 }
 
+// Update post privecy
+const updatePrivacy = async (id: string, userId: string, privacy: Privacy) => {
+    const result = await prisma.post.update({
+        where: {
+            id,
+            userId
+        },
+        data: {
+            privacy: privacy
+        }
+    });
+
+    return result;
+};
+
 // ** delete a post
 const deletePost = async (id: string, userId: string) => {
     const post = await prisma.post.delete({
@@ -108,5 +123,6 @@ export const PostService = {
     createPost,
     getAllPosts,
     updatePost,
+    updatePrivacy,
     deletePost
 }

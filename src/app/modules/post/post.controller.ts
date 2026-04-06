@@ -39,6 +39,19 @@ const updatePost = catchAsync(async (req: Request, res: Response) => {
     })
 })
 
+// ** update a post
+const updatePostPrivacy = catchAsync(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const payload = req.body;
+    const userId = req.user?.id as string;
+    const result = await PostService.updatePost(id as string, payload, userId);
+    sendResponse(res, {
+        statusCode: StatusCodes.OK,
+        message: "Post privacy updated",
+        data: result,
+    })
+})
+
 // ** delete a post
 const deletePost = catchAsync(async (req: Request, res: Response) => {
     const { id } = req.params;
@@ -56,5 +69,6 @@ export const PostController = {
     createPost,
     getAllPosts,
     updatePost,
+    updatePostPrivacy,
     deletePost
 }
