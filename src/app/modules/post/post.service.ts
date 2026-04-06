@@ -80,6 +80,135 @@ const getAllPosts = async () => {
     return posts;
 }
 
+// ** get single post */
+const getPostById = async (id: string) => {
+    const post = await prisma.post.findMany({
+        where: {
+            id
+        },
+        include: {
+            user: {
+                select: {
+                    name: true,
+                    image: true,
+                }
+            },
+            postReactions: {
+                include: {
+                    user: {
+                        select: {
+                            name: true,
+                            image: true,
+                        }
+                    }
+                },
+
+            },
+            comments: {
+                include: {
+                    user: {
+                        select: {
+                            name: true,
+                            image: true
+                        }
+                    },
+                    commentReactions: {
+                        include: {
+                            user: {
+                                select: {
+                                    name: true,
+                                    image: true,
+                                }
+                            }
+                        }
+                    },
+                    _count: {
+                        select: {
+                            commentReactions: true,
+                        }
+                    }
+                },
+                orderBy: {
+                    createdAt: "asc"
+                }
+            },
+            _count: {
+                select: {
+                    comments: true,
+                    postReactions: true,
+                }
+            }
+        }
+    });
+    return post;
+}
+
+// ** get user posts
+const getUserPosts = async (id: string) => {
+    const posts = await prisma.post.findMany({
+        where: {
+            userId: id
+        },
+        include: {
+            user: {
+                select: {
+                    name: true,
+                    image: true,
+                }
+            },
+            postReactions: {
+                include: {
+                    user: {
+                        select: {
+                            name: true,
+                            image: true,
+                        }
+                    }
+                },
+
+            },
+            comments: {
+                include: {
+                    user: {
+                        select: {
+                            name: true,
+                            image: true
+                        }
+                    },
+                    commentReactions: {
+                        include: {
+                            user: {
+                                select: {
+                                    name: true,
+                                    image: true,
+                                }
+                            }
+                        }
+                    },
+                    _count: {
+                        select: {
+                            commentReactions: true,
+                        }
+                    }
+                },
+                orderBy: {
+                    createdAt: "asc"
+                }
+            },
+            _count: {
+                select: {
+                    comments: true,
+                    postReactions: true,
+                }
+            }
+        },
+        orderBy: {
+            createdAt: "desc"
+        }
+    })
+    return posts;
+}
+
 // ** update a post
 const updatePost = async (id: string, payload: Partial<ICreatePost>, userId: string) => {
     const post = await prisma.post.update({
@@ -122,6 +251,8 @@ const deletePost = async (id: string, userId: string) => {
 export const PostService = {
     createPost,
     getAllPosts,
+    getPostById,
+    getUserPosts,
     updatePost,
     updatePrivacy,
     deletePost

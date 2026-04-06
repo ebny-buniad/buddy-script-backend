@@ -6,6 +6,8 @@ const router = Router();
 
 router.post("/", authMiddleware(Role.USER, Role.ADMIN), PostController.createPost);
 router.get("/", PostController.getAllPosts);
+router.get("/my-posts", authMiddleware(Role.USER, Role.ADMIN), PostController.getUserPosts);
+router.get("/:id", PostController.getPostById);
 router.put("/:id", authMiddleware(Role.USER, Role.ADMIN), PostController.updatePost);
 router.put("/:id/privacy", authMiddleware(Role.USER, Role.ADMIN), PostController.updatePostPrivacy);
 router.delete("/:id", authMiddleware(Role.USER, Role.ADMIN), PostController.deletePost);
