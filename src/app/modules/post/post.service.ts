@@ -36,10 +36,16 @@ const getAllPosts = async () => {
                         }
                     }
                 },
-            
+
             },
             comments: {
                 include: {
+                    user: {
+                        select: {
+                            name: true,
+                            image: true
+                        }
+                    },
                     commentReactions: {
                         include: {
                             user: {
@@ -55,6 +61,9 @@ const getAllPosts = async () => {
                             commentReactions: true,
                         }
                     }
+                },
+                orderBy: {
+                    createdAt: "asc"
                 }
             },
             _count: {

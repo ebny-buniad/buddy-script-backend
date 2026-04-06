@@ -4,14 +4,16 @@ import { IndexRoutes } from "./app/routes";
 import globalErrorHandler from "./middlewares/globalErrorHandler";
 import cors from 'cors';
 import { auth } from "./app/lib/auth";
-const app: Application = express();
+import cookieParser from "cookie-parser";
 
+const app: Application = express();
+// Middleware to parse JSON bodies
+app.use(express.json());
+app.use(cookieParser());
 app.use(cors({
     origin: process.env.APP_URL, // client side url
     credentials: true
 }))
-// Middleware to parse JSON bodies
-app.use(express.json());
 
 // Basic route
 app.get('/', async (req: Request, res: Response) => {
